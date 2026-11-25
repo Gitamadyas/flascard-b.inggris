@@ -6,105 +6,41 @@
   <title>Flashcard Bagian Tubuh - Indonesia ke Inggris</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
-    body {
-      background: linear-gradient(135deg, #fde68a, #fbcfe8, #bae6fd);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      color: #1e293b;
-    }
+    body { background: linear-gradient(135deg, #fde68a, #fbcfe8, #bae6fd); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; color: #1e293b; }
     h1 { color: #be185d; text-shadow: 2px 2px 0 #fff; margin-bottom: 6px; text-align: center; font-size: 28px; }
     p.sub { color: #334155; margin-bottom: 18px; text-align: center; font-weight: 600; }
-
-    /* Indikator Titik */
     .dots { display: flex; gap: 8px; margin-bottom: 16px; }
     .dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.7); border: 2px solid #94a3b8; cursor: pointer; }
     .dot.active { background: #f97316; border-color: #fff; transform: scale(1.25); }
-
-    /* Kartu 3D */
     #card-box { width: 330px; max-width: 92vw; height: 400px; perspective: 1000px; cursor: pointer; }
     #card-inner { width: 100%; height: 100%; position: relative; transition: transform 0.6s; transform-style: preserve-3d; }
     #card-inner.flipped { transform: rotateY(180deg); }
-
-    .face {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
-      border-radius: 26px;
-      border: 6px solid #fff;
-      box-shadow: 0 14px 30px rgba(0,0,0,0.15);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding: 24px 20px;
-      text-align: center;
-      background: #fff;
-    }
-
-    /* Sisi Belakang (Bahasa Inggris) */
-    .back {
-      background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
-      transform: rotateY(180deg);
-    }
-
+    .face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 26px; border: 6px solid #fff; box-shadow: 0 14px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; justify-content: space-between; padding: 24px 20px; text-align: center; background: #fff; }
+    .back { background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%); transform: rotateY(180deg); }
     .badge { padding: 5px 14px; border-radius: 20px; font-size: 13px; font-weight: 800; background: #fee2e2; color: #b91c1c; }
     .back .badge { background: #dbeafe; color: #1d4ed8; }
-
-    .img-wrap {
-      width: 155px;
-      height: 155px;
-      background: #f8fafc;
-      border-radius: 22px;
-      border: 3px dashed #cbd5e1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+    .img-wrap { width: 155px; height: 155px; background: #f8fafc; border-radius: 22px; border: 3px dashed #cbd5e1; display: flex; align-items: center; justify-content: center; }
     .word-main { font-size: 40px; font-weight: 800; letter-spacing: 1px; }
     .sent-box { background: #fff; padding: 14px; border-radius: 16px; width: 100%; border: 2px solid #93c5fd; }
-
-    /* Tombol Navigasi */
     .controls { display: flex; gap: 10px; margin-top: 20px; }
-    .btn {
-      background: #3b82f6;
-      color: #fff;
-      border: none;
-      padding: 12px 18px;
-      border-radius: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      font-size: 15px;
-      box-shadow: 0 4px 0 #1d4ed8;
-    }
+    .btn { background: #3b82f6; color: #fff; border: none; padding: 12px 18px; border-radius: 14px; font-weight: bold; cursor: pointer; font-size: 15px; box-shadow: 0 4px 0 #1d4ed8; }
     .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #1d4ed8; }
     .btn-green { background: #10b981; box-shadow: 0 4px 0 #047857; }
     .btn-green:active { box-shadow: 0 1px 0 #047857; }
   </style>
 </head>
 <body>
-
   <h1>Flashcard Bagian Tubuh 🧩</h1>
   <p class="sub">Klik kartu untuk melihat Bahasa Inggrisnya!</p>
-
   <div class="dots" id="dots"></div>
-
   <div id="card-box" onclick="flip()">
     <div id="card-inner">
-      <!-- SISI DEPAN: BAHASA INDONESIA -->
       <div class="face front">
         <span class="badge">BAHASA INDONESIA 🇮🇩</span>
         <div class="img-wrap" id="svg-area"></div>
         <div class="word-main" id="w-id">KEPALA</div>
         <small style="color:#64748b;">👆 Klik kartu untuk buka Bahasa Inggris</small>
       </div>
-
-      <!-- SISI BELAKANG: BAHASA INGGRIS -->
       <div class="face back">
         <span class="badge">ENGLISH 🇬🇧</span>
         <div>
@@ -120,54 +56,22 @@
       </div>
     </div>
   </div>
-
   <div class="controls">
     <button class="btn" onclick="nav(-1)">⬅️ Mundur</button>
     <button class="btn btn-green" onclick="speak()">🔊 Suara</button>
     <button class="btn" onclick="nav(1)">Maju ➡️</button>
   </div>
-
 <script>
 const data = [
-  {
-    indo: 'KEPALA', en: 'HEAD',
-    sEn: 'I wear a hat on my head.', sId: 'Aku memakai topi di kepalaku.', col: '#f97316',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><circle cx="50" cy="54" r="32" fill="#fdba74" stroke="#1e293b" stroke-width="3"/><path d="M18 50 c0-22 18-34 32-34 s32 12 32 34 c-8-10-20-13-32-13 s-24 3-32 13z" fill="#1e293b"/><circle cx="38" cy="54" r="4" fill="#1e293b"/><circle cx="62" cy="54" r="4" fill="#1e293b"/><path d="M42 66 q8 7 16 0" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/></svg>'
-  },
-  {
-    indo: 'MATA', en: 'EYES',
-    sEn: 'I see with my eyes.', sId: 'Aku melihat dengan mataku.', col: '#ef4444',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><ellipse cx="34" cy="50" rx="16" ry="22" fill="#fff" stroke="#1e293b" stroke-width="3"/><ellipse cx="66" cy="50" rx="16" ry="22" fill="#fff" stroke="#1e293b" stroke-width="3"/><circle cx="36" cy="50" r="8" fill="#1e293b"/><circle cx="68" cy="50" r="8" fill="#1e293b"/><circle cx="38" cy="47" r="3" fill="#fff"/><circle cx="70" cy="47" r="3" fill="#fff"/></svg>'
-  },
-  {
-    indo: 'TELINGA', en: 'EARS',
-    sEn: 'I listen with my ears.', sId: 'Aku mendengar dengan telingaku.', col: '#eab308',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M42 20 c24-6 38 12 34 36 c-2 18-14 28-26 26 c-8-2-10-10-5-15 c5-5 10-10 8-20 c-2-10-12-12-15-6 c-5 6-12-15 4-21z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>'
-  },
-  {
-    indo: 'HIDUNG', en: 'NOSE',
-    sEn: 'I smell with my nose.', sId: 'Aku mencium bau dengan hidungku.', col: '#22c55e',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M46 20 L35 56 c-6 3-10 12-5 17 c5 5 13 2 20 2 s15 3 20-2 c5-5 1-14-5-17 L54 20" fill="#fdba74" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/><circle cx="39" cy="68" r="3.5" fill="#9a3412"/><circle cx="61" cy="68" r="3.5" fill="#9a3412"/></svg>'
-  },
-  {
-    indo: 'MULUT', en: 'MOUTH',
-    sEn: 'I smile with my mouth.', sId: 'Aku tersenyum dengan mulutku.', col: '#ec4899',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M18 50 Q35 34 50 40 Q65 34 82 50 Q65 72 50 72 Q35 72 18 50 Z" fill="#f43f5e" stroke="#1e293b" stroke-width="3"/><path d="M22 50 Q50 55 78 50" fill="none" stroke="#1e293b" stroke-width="3"/></svg>'
-  },
-  {
-    indo: 'TANGAN', en: 'HANDS',
-    sEn: 'I clap my hands.', sId: 'Aku bertepuk tangan.', col: '#3b82f6',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M34 54 L28 30 a4 4 0 0 1 8-2 L40 46 L42 22 a4 4 0 0 1 8 0 L50 45 L55 24 a4 4 0 0 1 8 2 L58 48 L65 32 a4 4 0 0 1 7 3 L65 60 c-2 13-10 21-21 21 c-11 0-18-8-20-18 L17 52 a4 4 0 0 1 7-5 L34 54 Z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>'
-  },
-  {
-    indo: 'KAKI', en: 'LEGS',
-    sEn: 'I run with my legs.', sId: 'Aku berlari dengan kakiku.', col: '#a855f7',
-    svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M35 18 L55 46 L38 74 L62 74 a6 6 0 0 1 0 12 L28 86 a6 6 0 0 1-5-9 L40 46 L23 25 a7 7 0 0 1 12-7 Z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>'
-  }
+  { indo: 'KEPALA', en: 'HEAD', sEn: 'I wear a hat on my head.', sId: 'Aku memakai topi di kepalaku.', col: '#f97316', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><circle cx="50" cy="54" r="32" fill="#fdba74" stroke="#1e293b" stroke-width="3"/><path d="M18 50 c0-22 18-34 32-34 s32 12 32 34 c-8-10-20-13-32-13 s-24 3-32 13z" fill="#1e293b"/><circle cx="38" cy="54" r="4" fill="#1e293b"/><circle cx="62" cy="54" r="4" fill="#1e293b"/><path d="M42 66 q8 7 16 0" fill="none" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/></svg>' },
+  { indo: 'MATA', en: 'EYES', sEn: 'I see with my eyes.', sId: 'Aku melihat dengan mataku.', col: '#ef4444', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><ellipse cx="34" cy="50" rx="16" ry="22" fill="#fff" stroke="#1e293b" stroke-width="3"/><ellipse cx="66" cy="50" rx="16" ry="22" fill="#fff" stroke="#1e293b" stroke-width="3"/><circle cx="36" cy="50" r="8" fill="#1e293b"/><circle cx="68" cy="50" r="8" fill="#1e293b"/><circle cx="38" cy="47" r="3" fill="#fff"/><circle cx="70" cy="47" r="3" fill="#fff"/></svg>' },
+  { indo: 'TELINGA', en: 'EARS', sEn: 'I listen with my ears.', sId: 'Aku mendengar dengan telingaku.', col: '#eab308', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M42 20 c24-6 38 12 34 36 c-2 18-14 28-26 26 c-8-2-10-10-5-15 c5-5 10-10 8-20 c-2-10-12-12-15-6 c-5 6-12-15 4-21z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>' },
+  { indo: 'HIDUNG', en: 'NOSE', sEn: 'I smell with my nose.', sId: 'Aku mencium bau dengan hidungku.', col: '#22c55e', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M46 20 L35 56 c-6 3-10 12-5 17 c5 5 13 2 20 2 s15 3 20-2 c5-5 1-14-5-17 L54 20" fill="#fdba74" stroke="#1e293b" stroke-width="3" stroke-linecap="round"/><circle cx="39" cy="68" r="3.5" fill="#9a3412"/><circle cx="61" cy="68" r="3.5" fill="#9a3412"/></svg>' },
+  { indo: 'MULUT', en: 'MOUTH', sEn: 'I smile with my mouth.', sId: 'Aku tersenyum dengan mulutku.', col: '#ec4899', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M18 50 Q35 34 50 40 Q65 34 82 50 Q65 72 50 72 Q35 72 18 50 Z" fill="#f43f5e" stroke="#1e293b" stroke-width="3"/><path d="M22 50 Q50 55 78 50" fill="none" stroke="#1e293b" stroke-width="3"/></svg>' },
+  { indo: 'TANGAN', en: 'HANDS', sEn: 'I clap my hands.', sId: 'Aku bertepuk tangan.', col: '#3b82f6', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M34 54 L28 30 a4 4 0 0 1 8-2 L40 46 L42 22 a4 4 0 0 1 8 0 L50 45 L55 24 a4 4 0 0 1 8 2 L58 48 L65 32 a4 4 0 0 1 7 3 L65 60 c-2 13-10 21-21 21 c-11 0-18-8-20-18 L17 52 a4 4 0 0 1 7-5 L34 54 Z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>' },
+  { indo: 'KAKI', en: 'LEGS', sEn: 'I run with my legs.', sId: 'Aku berlari dengan kakiku.', col: '#a855f7', svg: '<svg viewBox="0 0 100 100" width="120" height="120"><path d="M35 18 L55 46 L38 74 L62 74 a6 6 0 0 1 0 12 L28 86 a6 6 0 0 1-5-9 L40 46 L23 25 a7 7 0 0 1 12-7 Z" fill="#fdba74" stroke="#1e293b" stroke-width="3"/></svg>' }
 ];
-
 let idx = 0, flipped = false;
-
 const dotsEl = document.getElementById('dots');
 data.forEach((_, i) => {
   const d = document.createElement('div');
@@ -175,7 +79,6 @@ data.forEach((_, i) => {
   d.onclick = () => { idx = i; render(); speak(); };
   dotsEl.appendChild(d);
 });
-
 function render() {
   const d = data[idx];
   flipped = false;
@@ -187,52 +90,38 @@ function render() {
   document.getElementById('w-sub').textContent = '(' + d.indo + ')';
   document.getElementById('s-en').textContent = '"' + d.sEn + '"';
   document.getElementById('s-id').textContent = '"' + d.sId + '"';
-
-  document.querySelectorAll('.dot').forEach((dot, i) => {
-    dot.classList.toggle('active', i === idx);
-  });
+  document.querySelectorAll('.dot').forEach((dot, i) => dot.classList.toggle('active', i === idx));
 }
-
 function flip() {
   flipped = !flipped;
   document.getElementById('card-inner').classList.toggle('flipped', flipped);
   speak();
 }
-
 function nav(step) {
   idx = (idx + step + data.length) % data.length;
   render();
   speak();
 }
-
 function speak() {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const d = data[idx];
-
   if (!flipped) {
-    // Sisi Depan: Bahasa Indonesia
     const uId = new SpeechSynthesisUtterance(d.indo.toLowerCase());
     uId.lang = 'id-ID';
     uId.rate = 0.85;
     window.speechSynthesis.speak(uId);
   } else {
-    // Sisi Belakang (saat dibuka): Bahasa Inggris + Contoh Kalimat pelan
     const uEn = new SpeechSynthesisUtterance(d.en.toLowerCase());
     uEn.lang = 'en-US';
     uEn.rate = 0.78;
-
     const uSent = new SpeechSynthesisUtterance(d.sEn);
     uSent.lang = 'en-US';
     uSent.rate = 0.78;
-
-    uEn.onend = () => {
-      setTimeout(() => window.speechSynthesis.speak(uSent), 450);
-    };
+    uEn.onend = () => setTimeout(() => window.speechSynthesis.speak(uSent), 450);
     window.speechSynthesis.speak(uEn);
   }
 }
-
 render();
 </script>
 </body>
